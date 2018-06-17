@@ -1,0 +1,59 @@
+<div *ngFor="let widget of widgets">
+  <div [ngSwitch]="widget.widgetType">
+    <div *ngSwitchCase="'Heading'">
+      <div [ngSwitch]="widget.size">
+        <h1 *ngSwitchCase="'1'">{{widget.headingText}}</h1>
+        <h2 *ngSwitchCase="'2'">{{widget.headingText}}</h2>
+        <h3 *ngSwitchCase="'3'">{{widget.headingText}}</h3>
+        <h4 *ngSwitchCase="'4'">{{widget.headingText}}</h4>
+        <h5 *ngSwitchCase="'5'">{{widget.headingText}}</h5>
+        <h6 *ngSwitchCase="'6'">{{widget.headingText}}</h6>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'Paragraph'">
+      <p>{{widget.text}}</p>
+    </div>
+
+    <div *ngSwitchCase="'List'">
+      <div [ngSwitch]="widget.listType">
+        <div *ngSwitchCase=1>
+          <ul class="list-group">
+            <li class="list-group-item"
+                *ngFor="let item of widget.listItemsText.split('\n')">
+              {{item}}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div [ngSwitch]="widget.listType">
+        <div *ngSwitchCase=1>
+          <ol class="list-group">
+            <li class="list-group-item"
+                *ngFor="let item of widget.listItemsText.split('\n')">
+              {{item}}
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'Link'">
+      <a  style="color: Blue "
+           href = {{widget.linkUrl}}>{{widget.linkName}}</a>
+    </div>
+
+    <div *ngSwitchCase="'Image'">
+      <div style = "width: 200px ; height: 200px ">
+        <img
+          style = "max-width: 100%; max-height: 100%"
+          src = {{widget.src}}/>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'Exam'">
+      <h1>Exam Widget</h1>
+    </div>
+  </div>
+</div>
