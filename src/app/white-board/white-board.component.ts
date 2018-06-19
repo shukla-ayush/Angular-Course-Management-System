@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-white-board',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WhiteBoardComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private route: ActivatedRoute) {
+    this.route.params.subscribe(
+      params => this.setParams(params));
+  }
+  userId;
+  setParams(params) {
+    this.userId = params['userId'];
+  }
   ngOnInit() {
   }
-
 }

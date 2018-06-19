@@ -15,11 +15,14 @@ export class RegisterComponent implements OnInit {
   username;
   password;
   password2;
+
   register(username, password, password2) {
-    this.service
-      .createUser(username, password)
-      .then(() =>
-        this.router.navigate(['profile']));
+    (username == null || password == null) ? alert("Username or Password cannot be empty") :
+      ((password === password2) ?
+          this.service.createUser(username, password)
+            .then((response) => { response.errorResponse === 0 ?
+              alert("Username is taken. Please provide other username.") : this.router.navigate(['profile']); } )
+      : alert("Passwords do not match"));
   }
 
   ngOnInit() {

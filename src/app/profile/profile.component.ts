@@ -17,13 +17,29 @@ export class ProfileComponent implements OnInit {
 
   user = {};
   username;
+  userId;
+  firstName;
+  lastName;
+  phone;
+  email;
+  address;
   password;
   sections = [];
 
-  update(user) {
-    console.log(user);
+  update(username, firstName, lastName, phone, email, address) {
+    this.service
+      .updateUser(username, firstName, lastName, phone, email, address)
+      .then((user) => {
+        this.username = user.username ;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.phone = user.phone;
+        this.address = user.address;
+        this.email = user.email;
+      })
+    console.log(this.email);
+    console.log(this.firstName);
   }
-
   logout() {
     this.service
       .logout()
@@ -31,16 +47,33 @@ export class ProfileComponent implements OnInit {
         this.router.navigate(['login']));
 
   }
-
   ngOnInit() {
     this.service
       .profile()
-      .then(user =>
-        this.username = user.username);
-
+      .then(response => response.status === 503 ?
+        this.router.navigate(['login'])
+        : this.func(response)
+          .then((user) => {
+            this.username = user.username ;
+            this.firstName = user.firstName ;
+            this.lastName = user.lastName ;
+            this.phone = user.phone ;
+            this.address = user.address ;
+            this.email = user.email ;
+            this.userId = user._id ; })
+      )
     this.sectionService
       .findSectionsForStudent()
       .then(sections => this.sections = sections );
+  }
+  func(response) {
+    return response.json();
+  }
+  unEnroll(section){
+    this.sectionService
+        .unEnrollFromSection(section._id)
+        .then(() => this.sectionService.findSectionsForStudent()
+          .then(sections => this.sections = sections ));
   }
 
 }

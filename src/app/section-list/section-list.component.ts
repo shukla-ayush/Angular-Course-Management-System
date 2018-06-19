@@ -12,13 +12,22 @@ export class SectionListComponent implements OnInit {
   constructor(private service: SectionServiceClient,
               private router: Router,
               private route: ActivatedRoute) {
-    this.route.params.subscribe(params => this.loadSections(params['courseId']))
+    this.route.params.subscribe(
+      params => this.setParams(params));
   }
 
   sectionName = '';
   seats = '';
+  buttonType = 'Add'
   courseId = '';
+  sectionId = ''
   sections = [];
+  userId;
+  setParams(params) {
+    this.userId = params['userId'];
+    this.courseId = params['courseId'];
+    this.loadSections(params['courseId']);
+  }
   loadSections(courseId) {
     this.courseId = courseId;
     this
@@ -36,8 +45,38 @@ export class SectionListComponent implements OnInit {
       });
   }
 
+  deleteSection(section) {
+    this
+      .service
+      .deleteSection(section, section._id)
+      .then(() => {
+        this.loadSections(this.courseId);
+      });
+  }
+  populate(section){
+    this.sectionName = section.name;
+    this.seats = section.seats;
+    this.buttonType = 'Update';
+    this.sectionId = section._id;
+  }
+  updateSection(name, seats) {
+    this.service
+      .updateSection(name, seats, this.courseId, this.sectionId)
+      .then((section) => {
+        this.loadSections(this.courseId);
+      })
+    this.buttonType = 'Add';
+    this.sectionName = '' ;
+    this.seats = '';
+  }
+  createUpdateSection(sectionName, seats){
+    if(this.buttonType === 'Add') {
+      this.createSection(sectionName, seats);
+    } else{
+      this.updateSection(sectionName, seats);
+    }
+  }
   enroll(section) {
-    // alert(section._id);
     this.service
       .enrollStudentInSection(section._id)
       .then(() => {

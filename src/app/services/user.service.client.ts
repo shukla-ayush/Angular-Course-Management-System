@@ -17,7 +17,7 @@ export class UserServiceClient {
       headers: {
         'content-type': 'application/json'
       }
-    });
+    }).then(response => response.json());
   }
 
   logout() {
@@ -31,6 +31,28 @@ export class UserServiceClient {
     return fetch('http://localhost:4000/api/profile',
       {
         credentials: 'include', // include, same-origin, *omit
+      })
+      .then(response => response);
+  }
+
+  updateUser(username, firstName, lastName, phone, email, address) {
+    const user = {
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+      email: email,
+      address: address
+    };
+    console.log(user.phone)
+    return fetch('http://localhost:4000/api/profile',
+      {
+        method: 'put',
+        body: JSON.stringify(user),
+        credentials: 'include', // include, same-origin, *omit
+        headers: {
+          'content-type': 'application/json'
+        }
       })
       .then(response => response.json());
   }
@@ -47,6 +69,6 @@ export class UserServiceClient {
       headers: {
         'content-type': 'application/json'
       }
-    });
+    }).then(response => response.json());
   }
 }

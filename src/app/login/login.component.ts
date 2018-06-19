@@ -12,10 +12,10 @@ export class LoginComponent implements OnInit {
   username;
   password;
   login(username, password) {
-    console.log([username, password]);
+    (username == null || password == null)? alert("Please enter valid credentials") :
     this.service
       .login(username, password)
-      .then(() => {
+      .then((response) => { response.errorLogin === 0 ? alert("No such user exists") :
         this.router.navigate(['profile']);
       });
   }

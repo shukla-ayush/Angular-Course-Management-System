@@ -1,19 +1,23 @@
 <div class="container-fluid">
   <h1>Profile</h1>
 
-  <input [(ngModel)]="username"
-         placeholder="username"
-         class="form-control"/>
+  <label>{{username}}</label>
   <input [(ngModel)]="firstName"
-         placeholder="first name"
+         placeholder="First Name"
          class="form-control"/>
   <input [(ngModel)]="lastName"
-         placeholder="lastName"
+         placeholder="Last Name"
          class="form-control"/>
   <input [(ngModel)]="email"
-         placeholder="email"
+         placeholder="E-mail"
          class="form-control"/>
-  <button (click)="update()"
+  <input [(ngModel)]="phone"
+         placeholder="Phone Number"
+         class="form-control"/>
+  <input [(ngModel)]="address"
+         placeholder="Address"
+         class="form-control"/>
+  <button (click)="update(username, firstName, lastName, phone, email, address)"
           class="btn btn-primary btn-block">
     Update
   </button>
@@ -22,12 +26,22 @@
 
   <ul class="list-group">
     <li *ngFor="let enrollment of sections" class="list-group-item">
-      {{enrollment.section.name}}
-      ({{enrollment.section.seats}})
+      <div>
+        {{enrollment.section.name}}
+        ({{enrollment.section.seats}})
+        <button *ngIf="sections.length === 0"
+                (click)="unEnroll(enrollment.section)"
+                class="btn btn-danger btn-block">Un-enroll</button>
+      </div>
     </li>
   </ul>
 
+  <div *ngIf="userId === '5b2739ec87da7566b04cd054'">
+    <a routerLink="/home/{{userId}}">Admin Page</a>
+  </div>
+  <div *ngIf="userId !== '5b2739ec87da7566b04cd054'">
+    <a routerLink="/home/{{userId}}">Home</a>
+  </div>
   <a (click)="logout()">Logout</a>
-  <a routerLink="/home">Home</a>
 
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CourseServiceClient} from "../services/course.service.client";
 import {Course} from "../models/coruse.model.client";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-course-grid',
@@ -9,10 +10,17 @@ import {Course} from "../models/coruse.model.client";
 })
 export class CourseGridComponent implements OnInit {
 
-  constructor(private service: CourseServiceClient) { }
+  constructor(private service: CourseServiceClient,
+              private route: ActivatedRoute) {
+    this.route.params.subscribe(
+      params => this.setParams(params));
+  }
 
   courses: Course[] = [];
-
+  userId;
+  setParams(params) {
+    this.userId = params['userId'];
+  }
   ngOnInit() {
     this.service.findAllCourses()
       .then(courses => this.courses = courses);

@@ -8,8 +8,14 @@
         <p class="card-text">Visit the modules and lesson of {{course.title}}</p>
         <a routerLink="/course/{{course.id}}"
            class="btn btn-primary">View Course</a>
-        <a routerLink="/course/{{course.id}}/section"
-           class="btn btn-primary">Enroll</a>
+        <div *ngIf="userId !== '5b2739ec87da7566b04cd054'">
+          <a routerLink="/course/{{course.id}}/section"
+             class="btn btn-primary">Enroll</a>
+        </div>
+        <div *ngIf="userId === '5b2739ec87da7566b04cd054'">
+          <a routerLink="/course/{{course.id}}/section/{{userId}}"
+             class="btn btn-primary">Add Section</a>
+        </div>
       </div>
     </div>
   </div>

@@ -1,20 +1,32 @@
 <div class="container-fluid">
   <h1>Sections for course: {{courseId}}</h1>
-  <input [(ngModel)]="sectionName"
-         placeholder="Section Name"
-         class="form-control">
-  <input [(ngModel)]="seats"
-         placeholder="Seats available"
-         class="form-control">
-  <button (click)="createSection(sectionName, seats)" class="btn btn-success btn-block">
-    Add Section
-  </button>
+  <div *ngIf="userId === '5b2739ec87da7566b04cd054'">
+    <input [(ngModel)]="sectionName"
+           placeholder="Section Name"
+           class="form-control">
+    <input [(ngModel)]="seats"
+           placeholder="Seats available"
+           class="form-control">
+    <button (click)="createUpdateSection(sectionName, seats)" class="btn btn-success btn-block">
+      {{this.buttonType}}
+    </button>
+  </div>
 
   <ul class="list-group">
     <li *ngFor="let section of sections" class="list-group-item">
       {{section.name}} {{section.seats}}
+      <div *ngIf="userId !== '5b2739ec87da7566b04cd054'">
       <button (click)="enroll(section)"
               class="float-right btn btn-primary">Enroll</button>
+      </div>
+      <div *ngIf="userId === '5b2739ec87da7566b04cd054'">
+        <button (click)="populate(section)"
+                class="float-right btn btn-primary">Edit</button>
+      </div>
+      <div *ngIf="userId === '5b2739ec87da7566b04cd054'">
+        <button (click)="deleteSection(section)"
+                class="float-right btn btn-danger">Delete</button>
+      </div>
     </li>
   </ul>
 

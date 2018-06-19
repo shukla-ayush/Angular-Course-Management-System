@@ -3,8 +3,10 @@
     White Board
   </h1>
 
-  <a routerLink="/login">Login</a>
-  <a routerLink="/register">Register</a>
+    <div *ngIf="userId == null">
+      <a routerLink="/login">Login</a>
+      <a routerLink="/register">Register</a>
+    </div>
 
   <app-course-grid></app-course-grid>
 </div>
