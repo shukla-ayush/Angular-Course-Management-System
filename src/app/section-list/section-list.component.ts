@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {SectionServiceClient} from "../services/section.service.client";
+import {CourseServiceClient} from "../services/course.service.client";
+import {UserServiceClient} from "../services/user.service.client";
 
 @Component({
   selector: 'app-section-list',
@@ -9,20 +11,30 @@ import {SectionServiceClient} from "../services/section.service.client";
 })
 export class SectionListComponent implements OnInit {
 
-  constructor(private service: SectionServiceClient,
+  constructor(private userService: UserServiceClient,
+              private service: SectionServiceClient,
+              private courseService: CourseServiceClient,
               private router: Router,
               private route: ActivatedRoute) {
     this.route.params.subscribe(
       params => this.setParams(params));
   }
-
+  username;
+  userId;
+  firstName;
+  lastName;
+  phone;
+  email;
+  address;
   sectionName = '';
   seats = '';
   buttonType = 'Add'
   courseId = '';
-  sectionId = ''
+  sectionId = '';
+  course;
+  role;
+  courseName;
   sections = [];
-  userId;
   setParams(params) {
     this.userId = params['userId'];
     this.courseId = params['courseId'];
@@ -34,12 +46,15 @@ export class SectionListComponent implements OnInit {
       .service
       .findSectionsForCourse(courseId)
       .then(sections => this.sections = sections);
+    this
+      .courseService
+      .findCourseById(this.courseId)
+      .then(course => {this.courseName = course.title; this.sectionName = course.title + ' Section ' + this.sections.length;} );
   }
-
   createSection(sectionName, seats) {
     this
       .service
-      .createSection(this.courseId, sectionName, seats)
+      .createSection(this.courseId, sectionName, seats, this.courseName)
       .then(() => {
         this.loadSections(this.courseId);
       });
@@ -69,7 +84,7 @@ export class SectionListComponent implements OnInit {
     this.sectionName = '' ;
     this.seats = '';
   }
-  createUpdateSection(sectionName, seats){
+  operationSection(sectionName, seats){
     if(this.buttonType === 'Add') {
       this.createSection(sectionName, seats);
     } else{
@@ -85,6 +100,31 @@ export class SectionListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userService
+      .profile()
+      .then(response => response.status === 503 ?
+        this.router.navigate(['login'])
+        : this.func(response)
+          .then((user) => {
+            this.role = user.role;
+            this.username = user.username ;
+            this.firstName = user.firstName ;
+            this.lastName = user.lastName ;
+            this.phone = user.phone ;
+            this.address = user.address ;
+            this.email = user.email ;
+            this.userId = user._id ; })
+      );
+  }
+  func(response) {
+    return response.json();
+  }
+  logout() {
+    this.userService
+      .logout()
+      .then(() =>
+        this.router.navigate(['login']));
+
   }
 
 }

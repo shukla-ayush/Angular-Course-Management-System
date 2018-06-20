@@ -60,7 +60,8 @@ export class UserServiceClient {
   createUser(username, password) {
     const user = {
       username: username,
-      password: password
+      password: password,
+      role: username.toLowerCase() === "admin" ? "admin" : "student"
     };
     return fetch('http://localhost:4000/api/user', {
       body: JSON.stringify(user),

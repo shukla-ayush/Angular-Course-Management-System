@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   username;
   password;
   login(username, password) {
-    (username == null || password == null)? alert("Please enter valid credentials") :
+    (username == null || password == null) ? alert("Please enter valid credentials") :
     this.service
       .login(username, password)
       .then((response) => { response.errorLogin === 0 ? alert("No such user exists") :
@@ -24,6 +24,15 @@ export class LoginComponent implements OnInit {
               private service: UserServiceClient) { }
 
   ngOnInit() {
+    this.service
+      .profile()
+      .then(response => response.status === 503 ?
+        this.router.navigate(['login'])
+        : this.router.navigate(['home'])
+      );
+  }
+  func(response) {
+    return response.json();
   }
 
 }

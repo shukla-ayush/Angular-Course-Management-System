@@ -26,6 +26,15 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service
+      .profile()
+      .then(response => response.status === 503 ?
+        this.router.navigate(['register'])
+        : this.router.navigate(['home'])
+      );
+  }
+  func(response) {
+    return response.json();
   }
 
 }

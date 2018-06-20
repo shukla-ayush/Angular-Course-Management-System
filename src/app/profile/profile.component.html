@@ -1,47 +1,74 @@
-<div class="container-fluid">
+<div class="container-fluid" style = "padding-left: 10%; padding-right: 10%">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a *ngIf="role === 'admin'" class="navbar-brand" href="#">Admin Home</a>
+    <a *ngIf="role !== 'admin'" class="navbar-brand" href="#">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profile">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a (click)="logout()" class="nav-link">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
   <h1>Profile</h1>
 
-  <label>{{username}}</label>
+    <label>Username: <b>{{username}}</b></label>
   <input [(ngModel)]="firstName"
          placeholder="First Name"
          class="form-control"/>
+  <br>
   <input [(ngModel)]="lastName"
          placeholder="Last Name"
          class="form-control"/>
+  <br>
   <input [(ngModel)]="email"
          placeholder="E-mail"
          class="form-control"/>
+  <br>
   <input [(ngModel)]="phone"
          placeholder="Phone Number"
          class="form-control"/>
+  <br>
   <input [(ngModel)]="address"
          placeholder="Address"
          class="form-control"/>
+  <br>
   <button (click)="update(username, firstName, lastName, phone, email, address)"
           class="btn btn-primary btn-block">
     Update
   </button>
-
-  <h2>Sections ({{sections.length}})</h2>
-
+  <br>
+  <div *ngIf="role !== 'admin'">
+    <h2>Sections ({{sections.length}})</h2>
+  </div>
+  <br>
   <ul class="list-group">
     <li *ngFor="let enrollment of sections" class="list-group-item">
-      <div>
-        {{enrollment.section.name}}
-        ({{enrollment.section.seats}})
-        <button *ngIf="sections.length === 0"
-                (click)="unEnroll(enrollment.section)"
-                class="btn btn-danger btn-block">Un-enroll</button>
+      <div class="row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-5">
+          <b>{{enrollment.section.courseName}}: </b>
+          {{enrollment.section.name}}
+          <b>({{enrollment.section.seats}})</b>
+        </div>
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-2">
+          <button *ngIf="sections.length !== 0"
+                  (click)="unEnroll(enrollment.section)"
+                  class="btn btn-danger">Un-enroll</button>
+        </div>
       </div>
     </li>
   </ul>
-
-  <div *ngIf="userId === '5b2739ec87da7566b04cd054'">
-    <a routerLink="/home/{{userId}}">Admin Page</a>
-  </div>
-  <div *ngIf="userId !== '5b2739ec87da7566b04cd054'">
-    <a routerLink="/home/{{userId}}">Home</a>
-  </div>
-  <a (click)="logout()">Logout</a>
-
+  <br>
 </div>
