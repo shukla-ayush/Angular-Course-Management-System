@@ -5,19 +5,18 @@
 <br>
 <div class="row">
   <div *ngFor="let course of courses" class="col-sm-3">
-    <div class="card">
+    <div class="card" style="color: white; background-color: black">
       <div class="card-body">
         <h5 class="card-title">{{course.title}}</h5>
-        <p class="card-text">Visit the modules and lesson of {{course.title}}</p>
+        <p *ngIf="role !== 'admin' && role != null && checkCourse(course.id)" class="card-text">Visit the modules and content of {{course.title}} and click enroll to view available sections and enroll</p>
+        <p *ngIf="role !== 'admin' && role != null && !checkCourse(course.id)" class="card-text">You are enrolled for the course {{course.title}}. Visit the modules, lessons and contents.</p>
+        <p *ngIf="role === null" class="card-text">Visit the modules and content of {{course.title}}. You need to register to whiteboard to enroll to any sections of this course.</p>
+        <p *ngIf="role === 'admin'" class="card-text">Visit the modules and content of {{course.title}} and click +/-to add/update/delete sections</p>
         <div class="row">
-            <div class="col-sm-3">
-              <div>
+            <div class="col-sm-6">
                 <a routerLink="/course/{{course.id}}"
                  class="btn btn-primary">View Course</a>
-              </div>
             </div>
-             <div class="col-sm-3">
-             </div>
             <div class="col-sm-4">
               <div *ngIf="role !== 'admin' && role != null && checkCourse(course.id)">
                 <a routerLink="/course/{{course.id}}/section"
@@ -38,58 +37,4 @@
     </div>
   </div>
 </div>
-<!--<h2>Course Grid ({{courses.length}})</h2>-->
-<!--<br>-->
-<!--<div style = "padding-left: 10%; padding-right: 10%">-->
-  <!--<div class="row">-->
-    <!--<div *ngFor="let course of courses" class="col-sm-3">-->
-      <!--<div class="card">-->
-        <!--<div class="card-body">-->
-          <!--<h5 class="card-title">{{course.title}}</h5>-->
-          <!--<p class="card-text">Visit the modules and lesson of {{course.title}}</p>-->
-          <!--<a routerLink="/course/{{course.id}}"-->
-             <!--class="btn btn-primary">View Course</a>-->
-          <!--<div >-->
-            <!--<a *ngIf="role !== 'admin' && checkCourse(course.id)" routerLink="/course/{{course.id}}/section"-->
-               <!--class="btn btn-primary">Enroll</a>-->
-          <!--</div>-->
-          <!--<a *ngIf="role === 'admin'" routerLink="/course/{{course.id}}/section"-->
-             <!--class="btn btn-primary">+/- Section</a>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--<br>-->
-  <!--<div class="row">-->
-    <!--<div *ngFor="let course of courses" class="col-sm-3">-->
-      <!--<div class="card" *ngIf="role !== 'admin' && !checkCourse(course.id)">-->
-        <!--<div class="card-body">-->
-          <!--<h5 class="card-title">{{course.title}}</h5>-->
-          <!--<p class="card-text">Visit the modules and lesson of {{course.title}}</p>-->
-          <!--<a routerLink="/course/{{course.id}}"-->
-             <!--class="btn btn-primary">View Course</a>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--<div class="row">-->
-    <!--<div *ngFor="let course of courses" class="col-sm-3">-->
-      <!--<div class="card" *ngIf="role === 'admin'">-->
-        <!--<div class="card-body">-->
-          <!--<h5 class="card-title">{{course.title}}</h5>-->
-          <!--<p class="card-text">Visit the modules and lesson of {{course.title}}</p>-->
-          <!--<a routerLink="/course/{{course.id}}"-->
-             <!--class="btn btn-primary">View Course</a>-->
-          <!--<div *ngIf="role !== 'admin' && checkCourse(course.id)">-->
-            <!--<a routerLink="/course/{{course.id}}/section"-->
-               <!--class="btn btn-primary">Enroll</a>-->
-          <!--</div>-->
-          <!--<div>-->
-            <!--<a routerLink="/course/{{course.id}}/section"-->
-               <!--class="btn btn-primary">+/- Section</a>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
+

@@ -1,9 +1,9 @@
 export class SectionServiceClient {
 
-  SECTION_URL = 'http://localhost:4000/api/course/COURSEID/section';
+  SECTION_URL = 'http://shielded-waters-68947.herokuapp.com/api/course/COURSEID/section';
 
   findSectionsForStudent() {
-    const url = 'http://localhost:4000/api/student/section';
+    const url = 'http://shielded-waters-68947.herokuapp.com/api/student/section';
     return fetch(url, {
       credentials: 'include'
     })
@@ -11,7 +11,7 @@ export class SectionServiceClient {
   }
 
   enrollStudentInSection(sectionId) {
-    const url = 'http://localhost:4000/api/section/' + sectionId + '/enrollment';
+    const url = 'http://shielded-waters-68947.herokuapp.com/api/section/' + sectionId + '/enrollment';
     return fetch(url, {
       method: 'post',
       credentials: 'include'
@@ -19,7 +19,7 @@ export class SectionServiceClient {
   }
 
   unEnrollFromSection(sectionId) {
-    const url = 'http://localhost:4000/api/section/' + sectionId + '/enrollment';
+    const url = 'http://shielded-waters-68947.herokuapp.com/api/section/' + sectionId + '/enrollment';
     return fetch(url, {
       method: 'delete',
       credentials: 'include'
@@ -27,7 +27,7 @@ export class SectionServiceClient {
   }
 
   deleteSection(section1, sectionId) {
-    const url = 'http://localhost:4000/api/section/' + sectionId;
+    const url = 'http://shielded-waters-68947.herokuapp.com/api/section/' + sectionId;
     const section = {
       name: section1.name,
       seats: section1.seats,
@@ -54,7 +54,7 @@ export class SectionServiceClient {
       _id: sectionId,
       courseId: courseId
     };
-    return fetch('http://localhost:4000/api/section',
+    return fetch('http://shielded-waters-68947.herokuapp.com/api/section',
       {
         method: 'put',
         body: JSON.stringify(section),
