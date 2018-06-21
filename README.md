@@ -1,9 +1,9 @@
 This is the client repository for Student side of the Course Management System application, which is being implemented in Angular. This part of application provides read only access to content posted by instructors(implemented using React and Spring). The students can view courses, modules, lesson and their widgets. They can also view sections available for various courses, and enroll in them. They can un-enroll anytime they want.
 
-The admin is provided with the ability to add/delete/update sections of course. The admin for the deployed application is already created and hence cannot be created again. The credentials for admin are-
+The admin for the deployed application is already created. The credentials for admin are-
 
-*Username - admin
-*Password - admin
+- Username = admin
+- Password = admin
 
 Session is being used which ensures, based on the role of the user (either "student" or admin), content gets displayed according to the user. 
 
