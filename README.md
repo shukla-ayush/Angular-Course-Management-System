@@ -1,3 +1,5 @@
+# Angular-Course-Management-System
+
 This is the client repository for Student side of the Course Management System application, which is being implemented in Angular. This part of application provides read only access to content posted by instructors(implemented using React and Spring). The students can view courses, modules, lesson and their widgets. They can also view sections available for various courses, and enroll in them. They can un-enroll anytime they want.
 
 The admin for the deployed application is already created. The credentials for admin are-
